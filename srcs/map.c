@@ -6,47 +6,37 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:34:22 by wta               #+#    #+#             */
-/*   Updated: 2018/12/19 15:56:43 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/21 00:42:00 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/includes/libft.h"
 #include "filler.h"
-
-int	ft_mapndel(char **split, int n)
-{
-	while (n >= 0)
-	{
-		ft_strdel(&str[n]);
-		n--;
-	}
-	free(split);
-	split = NULL;
-	return (0);
-}
 
 int	create_map(t_info *info)
 {
 	char	*needle;
 	char	*line;
+	int		ret;
 	int		idx;
-	int		gnl_ret;
 
-	if (info->map == NULL)
-		return (1);
-	if ((info->map = ft_memalloc(sizeof(char*) * (info->height + 1))) == NULL)
+	if ((info->map.map = ft_memalloc(sizeof(char*) * (info->map.height + 1))) == NULL)
 		return (0);
+	if (get_next_line(0, &line) <= 0)
+		return (ft_mapndel(info->map.map, -1));
+	ft_strdel(&line);
+	ret = 1;
 	idx = 0;
-	while (idx < info->height)
+	while (ret == 1 && idx < info->map.height)
 	{
-		if ((gnl_ret = get_next_line(0, &line)) <= 0)
-			break ;
-		if ((needle = ft_strchr(line, ' ')) == NULL)
-			break ;
-		if ((info->map[idx] = ft_strdup(needle)) == NULL)
-			break ;
+		if (get_next_line(0, &line) <= 0
+		|| (needle = ft_strchr(line, ' ')) == NULL
+		|| (info->map.map[idx] = ft_strdup(needle + 1)) == NULL)
+			ret = 0;
+		ft_strdel(&line);
 		idx++;
 	}
-	if (gnl_ret <= 0 || needle == NULL || info->map[info->height - 1] == NULL)
-		return (ft_mapndel(info->map, idx));
-	return (1);
+	if (ret == 0)
+		return (ft_mapndel(info->map.map, idx - 1));
+	return (ret);
 }

@@ -6,7 +6,7 @@
 #    By: wta <wta@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/28 20:09:26 by wta               #+#    #+#              #
-#    Updated: 2018/12/02 16:58:03 by wta              ###   ########.fr        #
+#    Updated: 2018/12/20 20:32:16 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #=======================================================================  COLOR#
@@ -56,7 +56,7 @@ ft_utils2.c
 #======================================================================# RULES #
 all : $(NAME)
 #=======================================================================# NAME #
-$(NAME) : $(OBJLIBFT) $(OBJPRINTF) $(addprefix $(INCDIR)/,$(HEADER))
+$(NAME) : $(OBJLIBFT) $(OBJPRINTF)
 	@ar -rcs $(NAME) $(OBJLIBFT) $(OBJPRINTF)
 	@echo "\n$(_GREEN)[CREATED]$(_WHITE)" $@
 	@echo "All objects files are in $(_DYELLOW)obj$(_WHITE)/"
@@ -65,12 +65,12 @@ $(OBJDIR) :
 	@mkdir $@
 	@echo "$(_YELLOW)[CREATED]$(_WHITE)" $@
 #==================================================================# FT_PRINTF #
-$(addprefix $(OBJDIR)/,%.o) : $(addprefix $(FT_PRINTF)/,%.c) | $(OBJDIR) 
+$(addprefix $(OBJDIR)/,%.o) : $(addprefix $(FT_PRINTF)/,%.c) includes/ft_printf.h | $(OBJDIR) 
 	@$(CC) $(CFLAGS) $(INC) -o $@ -c $< 
 	@echo "\r                                                              \r\c"
 	@echo "$(_GREEN)[OK]$(_WHITE) $@\c"
 #======================================================================# LIBFT #
-$(addprefix $(OBJDIR)/,%.o) : $(addprefix $(LIBFT)/,%.c) | $(OBJDIR) 
+$(addprefix $(OBJDIR)/,%.o) : $(addprefix $(LIBFT)/,%.c) includes/libft.h | $(OBJDIR) 
 	@$(CC) $(CFLAGS) $(INC) -o $@ -c $< 
 	@echo "\r                                                              \r\c"
 	@echo "$(_GREEN)[OK]$(_WHITE) $@\c"

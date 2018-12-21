@@ -6,62 +6,83 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2018/12/19 17:14:20 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/21 11:06:22 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
 #include "../libft/includes/libft.h"
+#include "filler.h"
 
 void	init_info(t_info *info)
 {
 	info->player = 0;
-	info->width = 0;
-	info->height = 0;
+	(&info->map)->width = 0;
+	(&info->map)->height = 0;
+	info->lst = NULL;
 }
 
 int		get_player(t_info *info)
 {
 	char	*line;
-	char	*needle;
 
 	line = NULL;
-	needle = NULL;
 	if (info->player != 0)
 		return (1);
 	if (get_next_line(0, &line) <= 0)
 		return (0);
-	if ((needle = ft_strnstr(line, "$$$ exec p", 10)) != NULL)
+	if (ft_strnstr(line, "$$$ exec", 8) != NULL)
 	{
-		if (needle[10] == '1' && needle[11] == ' ')
+		if (ft_strstr(line, "p1"))
 			info->player = 'O';
-		else if (needle[10] == '2' && needle[11] == ' ')
+		else if (ft_strstr(line, "p2"))
 			info->player = 'X';
+		info->enemy = (info->player == 'O') ? 'X' : 'O';
 		ft_strdel(&line);
 	}
 	return (info->player == 'O' || info->player == 'X');
 }
 
+int	check_map_info(t_map *curr, t_map *parsed)
+{
+	int	ret;
+
+	ret = 1;
+	if ((curr->width != 0 && curr->width == parsed->width)
+	&& (curr->height != 0 && curr->height == parsed->height))
+		return (ret);
+	if (curr->width == 0 && parsed->width != 0)
+		curr->width = parsed->width;
+	else
+		ret = 0;
+	if (curr->height == 0 && parsed->height != 0)
+		curr->height = parsed->height;
+	else
+		ret = 0;
+	return (ret);
+}
+
 int	get_map_info(t_info *info)
 {
+	t_map	parsed;
 	char	**split;
 	char	*line;
+	int		ret;
 
 	line = NULL;
-	if (info->width != 0 && info->height != 0)
-		return (1);
+	ret = 0;
 	if (get_next_line(0, &line) <= 0)
-		return (0);
+		return (ret);
 	if ((split = ft_strsplit(line, ' ')) != NULL)
 	{
-		if (ft_strcmp("Plateau", split[0]) == 0)
+		if ((ft_strcmp("Plateau", split[0])) == 0
+		&& split[1] != NULL && split[2] != NULL)
 		{
-			/*
-			 * TODO
-			 */
+			parsed.width = ft_atoi(split[2]);
+			parsed.height = ft_atoi(split[1]);
+			ret = check_map_info(&info->map, &parsed);
 		}
 		ft_splitdel(split);
 	}
 	ft_strdel(&line);
-	return (0);
+	return (ret);
 }

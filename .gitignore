@@ -1,2 +1,6 @@
 *.o
 libft.a
+Show_Filler
+filler.trace
+*.swp
+*.dSYM

@@ -6,11 +6,12 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 19:18:54 by wta               #+#    #+#             */
-/*   Updated: 2018/12/18 19:29:45 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/20 23:30:06 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static t_list	*get_file(t_list **head, int fd)
 {
@@ -65,7 +66,9 @@ static char		*get_str(const int fd, char *cutover, int *ret)
 {
 	char	buf[BUFF_SIZE + 1];
 
-	while ((*ret = read(fd, buf, BUFF_SIZE)))
+	if (ft_strchr(cutover, '\n') != NULL)
+		return (cutover);
+	while ((*ret = read(fd, buf, BUFF_SIZE)) > 0)
 	{
 		buf[*ret] = 0;
 		if (!(cutover = ft_strjoindel(cutover, buf)))
