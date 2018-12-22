@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2018/12/21 11:06:22 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/22 11:25:08 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_info(t_info *info)
 	(&info->map)->width = 0;
 	(&info->map)->height = 0;
 	info->lst = NULL;
+	info->map.map = NULL;
 }
 
 int		get_player(t_info *info)

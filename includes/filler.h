@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:16:09 by wta               #+#    #+#             */
-/*   Updated: 2018/12/21 11:05:10 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/21 22:59:14 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	s_lst_pos
 {
 	struct s_lst_pos	*next;
 	t_pos				pos;
+	t_pos				closest;
 }				t_lst_pos;
 
 typedef struct	s_info
@@ -47,10 +48,11 @@ typedef struct	s_info
 	char		enemy;
 	t_map		map;
 	t_piece		piece;
+	t_pos		closest;
 	t_pos		output;
+	t_pos		new_enemy;
 	t_lst_pos	*lst;
 }				t_info;
-
 void	init_info(t_info *info);
 int		get_player(t_info *info);
 int		get_map_info(t_info *info);
@@ -62,6 +64,7 @@ int		create_map(t_info *info);
 int		parse_piece(t_info *info);
 int		read_stdin(t_info *info);
 int		parse_map(t_info *info);
+int		compare_map(t_info *info);
 
 t_lst_pos	*lst_newnode(int x, int y);
 void	push_front(t_lst_pos **lst, t_lst_pos *node);
