@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:33:58 by wta               #+#    #+#             */
-/*   Updated: 2018/12/21 00:42:47 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/24 15:31:22 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,31 @@ int	get_piece(t_info *info, int width, int height)
 	return (ret);
 }
 
+void	get_shift(t_piece *piece)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	piece->shift_x = piece->width;
+	piece->shift_y = piece->height;
+	while (y < piece->height)
+	{
+		x = 0;
+		while (x < piece->width)
+		{
+			if (piece->piece[y][x] == '*')
+			{
+				piece->shift_x = (x < piece->shift_x) ? x : piece->shift_x;
+				piece->shift_y = (y < piece->shift_y) ? y : piece->shift_y;
+			}
+			x++;
+		}
+		y++;
+	}
+
+}
+
 int	parse_piece(t_info *info)
 {
 	char	**split;
@@ -95,6 +120,7 @@ int	parse_piece(t_info *info)
 			piece_ptr->height = ft_atoi(split[1]);
 			piece_ptr->width = ft_atoi(split[2]);
 			ret = get_piece(info, piece_ptr->width, piece_ptr->height);
+			get_shift(&info->piece);
 		}
 		ft_splitdel(split);
 	}

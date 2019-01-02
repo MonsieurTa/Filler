@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:16:09 by wta               #+#    #+#             */
-/*   Updated: 2018/12/21 22:59:14 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/27 19:54:57 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,16 @@ typedef struct	s_piece
 	char	**piece;
 	int		width;
 	int		height;
+	int		shift_x;
+	int		shift_y;
 }				t_piece;
 
 typedef struct	s_lst_pos
 {
 	struct s_lst_pos	*next;
 	t_pos				pos;
-	t_pos				closest;
+	int					closest;
+	int					closest_enemy;
 }				t_lst_pos;
 
 typedef struct	s_info
@@ -48,25 +51,34 @@ typedef struct	s_info
 	char		enemy;
 	t_map		map;
 	t_piece		piece;
-	t_pos		closest;
-	t_pos		output;
 	t_pos		new_enemy;
+	t_pos		output;
 	t_lst_pos	*lst;
 }				t_info;
-void	init_info(t_info *info);
-int		get_player(t_info *info);
-int		get_map_info(t_info *info);
-void	ft_splitdel(char **split);
-char	*ft_str_char_skip(char *str, char c);
-int		ft_mapndel(char **split, int n);
 
-int		create_map(t_info *info);
-int		parse_piece(t_info *info);
-int		read_stdin(t_info *info);
-int		parse_map(t_info *info);
-int		compare_map(t_info *info);
+void		init_info(t_info *info);
+
+int			get_player(t_info *info);
+int			get_map_info(t_info *info);
+
+int			read_stdin(t_info *info);
+
+int			create_map(t_info *info);
+int			compare_map(t_info *info);
+
+int			parse_piece(t_info *info);
+int			parse_map(t_info *info);
+
+void		init_delta(t_lst_pos *node);
+void		set_delta(t_info *info, t_lst_pos *node, int dx, int dy);
+void		set_delta_closest(t_info *info, t_lst_pos *node, int x, int y);
+void		set_delta_aim(t_info *info, t_lst_pos *node, int x, int y);
+
+char		*ft_str_char_skip(char *str, char c);
+void		ft_splitdel(char **split);
 
 t_lst_pos	*lst_newnode(int x, int y);
-void	push_front(t_lst_pos **lst, t_lst_pos *node);
+void		push_front(t_lst_pos **lst, t_lst_pos *node);
+int			ft_mapndel(char **split, int n);
 void		rm_lst(t_lst_pos *lst);
 #endif

@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.41.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 00:59:07 by wta               #+#    #+#             */
-/*   Updated: 2018/12/22 17:50:21 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/25 13:54:41 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,18 @@ int	is_valid_pos(t_info *info, char c, int x, int y)
 	else if ((y >= info->map.height || x >= info->map.width)
 	&& c == '.')
 		return (1);
-	if (y < info->map.height && x < info->map.width)
+	else if ((y < 0 || x < 0) && c == '*')
+		return (0);
+	else if ((y < 0 || x < 0) && c == '.')
 		return (1);
-	return (0);
+	return (1);
 }
 
 int	check_piece_on_map(t_info *info, int x, int y)
 {
 	int	stack;
+	t_lst_pos	*node;
+	t_pos	pos;
 	int	row;
 	int	col;
 
@@ -40,14 +44,14 @@ int	check_piece_on_map(t_info *info, int x, int y)
 		while (stack <= 1 && col < info->piece.width)
 		{
 			if (is_valid_pos(info, info->piece.piece[row][col],
-					col + x, row + y) == 0)
+			col - info->piece.shift_x + x, row - info->piece.shift_y + y) == 0)
 				return (0);
 			if (info->piece.piece[row][col] == '*'
-			&& info->map.map[row + y][col + x] != info->player
-			&& info->map.map[row + y][col + x] != '.')
+			&& info->map.map[row - info->piece.shift_y + y][col - info->piece.shift_x + x] != info->player
+			&& info->map.map[row - info->piece.shift_y + y][col - info->piece.shift_x + x] != '.')
 				return (0);
 			if (info->piece.piece[row][col] == '*'
-			&& info->map.map[row + y][col + x] == info->player)
+			&& info->map.map[row - info->piece.shift_y + y][col - info->piece.shift_x + x] == info->player)
 				stack++;
 			col++;
 		}
@@ -56,30 +60,49 @@ int	check_piece_on_map(t_info *info, int x, int y)
 	return (stack == 1);
 }
 
-t_pos	set_delta_aim(t_info *info, int x, int y)
+void	set_aim(t_info *info, t_lst_pos *node, int dx, int dy)
 {
-	t_pos	delta;
+	int	delta;
 
-	delta.x = ft_abs(info->new_enemy.x - x);
-	delta.y = ft_abs(info->new_enemy.y - y);
-	return (delta);
+	delta = ft_pow(dx + dy, 2);
+	if (node->closest_enemy == -1)
+		node->closest_enemy = delta;
+	else if (delta < node->closest_enemy)
+		node->closest_enemy = delta;
 }
 
-void	set_delta(t_info *info, t_lst_pos *node, int dx, int dy)
+void	set_delta_aim(t_info *info, t_lst_pos *node, int x, int y)
 {
-	t_pos	delta;
+	t_pos	coord;
 
-	delta.x = dx;
-	delta.y = dy;
-	if (node->closest.x == -1)
+	coord.y = 0;
+	while (coord.y < info->piece.height)
+	{
+		coord.x = 0;
+		while (coord.x < info->piece.width)
+		{
+			if (info->piece.piece[coord.y][coord.x] == '*')
+				set_aim(info, node, ft_abs(x + coord.x - info->new_enemy.x),
+						ft_abs(y + coord.y - info->new_enemy.y));
+			coord.x++;
+		}
+		coord.y++;
+	}
+}
+
+void	set_closest(t_info *info, t_lst_pos *node, int dx, int dy)
+{
+	int	delta;
+
+	delta = ft_pow(dx + dy, 2);
+	if (node->closest == -1)
 		node->closest = delta;
-	else if (dx <= node->closest.x && dy <= node->closest.y)
+	else if (delta < node->closest)
 		node->closest = delta;
 }
 
 void	set_delta_closest(t_info *info, t_lst_pos *node, int x, int y)
 {
-	t_pos	delta;
 	int		row;
 	int		col;
 
@@ -92,13 +115,13 @@ void	set_delta_closest(t_info *info, t_lst_pos *node, int x, int y)
 			if (info->map.map[row][col] == info->enemy)
 			{
 				if (col > 0 && info->map.map[row][col - 1] == '.')
-					set_delta(info, node, ft_abs(col - x - 1), ft_abs(row - y));
+					set_closest(info, node, ft_abs(col - x - 1), ft_abs(row - y));
 				if (col < info->map.width - 1 && info->map.map[row][col + 1] == '.')
-					set_delta(info, node, ft_abs(col - x + 1), ft_abs(row - y));
+					set_closest(info, node, ft_abs(col - x + 1), ft_abs(row - y));
 				if (row > 0 && info->map.map[row - 1][col] == '.')
-					set_delta(info, node, ft_abs(col - x), ft_abs(row - y - 1));
+					set_closest(info, node, ft_abs(col - x), ft_abs(row - y - 1));
 				if (row < info->map.height - 1 && info->map.map[row + 1][col] == '.')
-					set_delta(info, node, ft_abs(col - x), ft_abs(row - y + 1));
+					set_closest(info, node, ft_abs(col - x), ft_abs(row - y + 1));
 			}
 				//node->closest = set_delta(info, node, ft_abs(col - x), ft_abs(row - y));
 			col++;
@@ -107,49 +130,16 @@ void	set_delta_closest(t_info *info, t_lst_pos *node, int x, int y)
 	}
 }
 
-t_pos	init_delta(void)
+void	init_delta(t_lst_pos *node)
 {
-	t_pos	delta;
-
-	delta.x = -1;
-	delta.y = -1;
-	return (delta);
-}
-
-void	set_closest_delta(t_lst_pos *node, t_pos *delta)
-{
-	node->closest = *delta;
-}
-
-void	find_closest(t_info *info, t_lst_pos *node, int x, int y)
-{
-	char	**map;
-	int		row;
-	int		col;
-	t_pos	delta;
-
-	map = info->map.map;
-	node->closest = init_delta();
-	row = 0;
-	while (row < info->piece.height)
-	{
-		col = 0;
-		while (col < info->piece.width)
-		{
-			if (row + y < info->map.height && col + x < info->map.width
-			&& info->map.map[row + y][col + x] == info->player
-			&& info->piece.piece[row][col] == '*')
-				break ;
-			col++;
-		}
-		row++;
-	}
-	set_delta_closest(info, node, col + x, row + y);
+	node->closest = -1;
+	node->closest_enemy = -1;
 }
 
 int	parse_map(t_info *info)
 {
 	t_lst_pos	*node;
+	t_pos		pos;
 	int			row;
 	int			col;
 	
@@ -161,8 +151,12 @@ int	parse_map(t_info *info)
 		{
 			if (check_piece_on_map(info, col, row) == 1)
 			{
-				node = lst_newnode(col, row);
-				find_closest(info, node, col, row);
+				pos.x = col - info->piece.shift_x;
+				pos.y = row - info->piece.shift_y;
+				node = lst_newnode(pos.x , pos.y);
+				init_delta(node);
+				set_delta_aim(info, node, pos.x, pos.y);
+				set_delta_closest(info, node, pos.x, pos.y);
 				push_front(&info->lst, node);
 			}
 			col++;

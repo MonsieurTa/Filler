@@ -6,12 +6,36 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:34:22 by wta               #+#    #+#             */
-/*   Updated: 2018/12/22 00:15:53 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/24 16:58:25 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/includes/libft.h"
 #include "filler.h"
+
+
+void	get_first_enemy(t_info *info)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < info->map.height)
+	{
+		x = 0;
+		while (x < info->map.width)
+		{
+			if (info->map.map[y][x] == info->enemy)
+			{
+				info->new_enemy.x = x;
+				info->new_enemy.y = y;
+				break ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
 
 int	create_map(t_info *info)
 {
@@ -38,6 +62,7 @@ int	create_map(t_info *info)
 	}
 	if (ret == 0)
 		return (ft_mapndel(info->map.map, idx - 1));
+	get_first_enemy(info);
 	return (ret);
 }
 
