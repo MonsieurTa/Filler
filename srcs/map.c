@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:34:22 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 21:00:04 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 21:16:38 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	set_new_enemy(t_pos *new_enemy, int x, int y)
 	new_enemy->y = y;
 }
 
-int		find_enemy(t_info *info, char *needle, int y)
+char	*find_enemy(t_info *info, char *needle, int y)
 {
 	char	*line;
 	int		x;
@@ -88,7 +88,7 @@ int		find_enemy(t_info *info, char *needle, int y)
 				set_new_enemy(&info->new_enemy, x, y);
 		}
 	}
-	return (needle != NULL);
+	return (needle);
 }
 
 int		compare_map(t_info *info)
@@ -108,14 +108,13 @@ int		compare_map(t_info *info)
 	ft_strdel(&line);
 	while (ret == 1 && ++y < info->map.height)
 	{
-		ret = find_enemy(info, needle, y);
+		if ((needle = find_enemy(info, needle, y)) == NULL)
+			ret = 0;
 		tmp = info->map.map[y];
-		if (ret == 1 && (info->map.map[y] = ft_strdup(needle + 1)) == NULL)
+		if ((info->map.map[y] = ft_strdup(needle + 1)) == NULL)
 			ret = 0;
 		free(tmp);
 		ft_strdel(&line);
 	}
-	if (ret == 0)
-		return (ft_mapndel(info->map.map, y - 1));
-	return (ret);
+	return ((ret == 0) ? ft_mapndel(info->map.map, y - 1) : ret);
 }
