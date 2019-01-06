@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:31:34 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 20:43:40 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 22:35:59 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,26 @@ void	ft_splitdel(char **split)
 			ft_strdel(&split[idx]);
 			idx++;
 		}
+		free(split);
+		split = NULL;
 	}
 }
 
 int		ft_mapndel(char **split, int n)
 {
-	while (n >= 0)
+	int	i;
+
+	i = 0;
+	if (split)
 	{
-		ft_strdel(&split[n]);
-		n--;
+		while (split[i] != NULL && i < n)
+		{
+			ft_strdel(&split[i]);
+			i++;
+		}
+		free(split);
+		split = NULL;
 	}
-	free(split);
-	split = NULL;
 	return (0);
 }
 

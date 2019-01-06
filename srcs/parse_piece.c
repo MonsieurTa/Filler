@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:33:58 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 10:54:07 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 22:39:24 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ int		get_piece(t_info *info, int width, int height)
 		while (ret == 1 && ++y < height)
 		{
 			if (get_next_line(0, &line) <= 0)
-				return (ft_mapndel(info->piece.piece, y - 1));
+				return (ft_mapndel(info->piece.piece, y));
 			ret = check_piece_line(info, line, y);
 			ft_strdel(&line);
 		}
 		if (ret == 0)
-			return (ft_mapndel(info->piece.piece, y - 1));
+			return (ft_mapndel(info->piece.piece, y));
 	}
 	return (ret);
 }
