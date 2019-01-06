@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:16:09 by wta               #+#    #+#             */
-/*   Updated: 2018/12/27 19:54:57 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 11:04:58 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,10 @@ void		set_delta(t_info *info, t_lst_pos *node, int dx, int dy);
 void		set_delta_closest(t_info *info, t_lst_pos *node, int x, int y);
 void		set_delta_aim(t_info *info, t_lst_pos *node, int x, int y);
 
+int			is_valid_pos(t_info *info, char c, int x, int y);
+int			check_piece_on_map(t_info *info, int x, int y, int stack);
+void		set_aim(t_lst_pos *node, int dx, int dy);
+
 char		*ft_str_char_skip(char *str, char c);
 void		ft_splitdel(char **split);
 
@@ -81,4 +85,5 @@ t_lst_pos	*lst_newnode(int x, int y);
 void		push_front(t_lst_pos **lst, t_lst_pos *node);
 int			ft_mapndel(char **split, int n);
 void		rm_lst(t_lst_pos *lst);
+
 #endif

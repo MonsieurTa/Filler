@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2018/12/22 11:25:08 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 10:52:17 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		get_player(t_info *info)
 	return (info->player == 'O' || info->player == 'X');
 }
 
-int	check_map_info(t_map *curr, t_map *parsed)
+int		check_map_info(t_map *curr, t_map *parsed)
 {
 	int	ret;
 
@@ -62,7 +62,7 @@ int	check_map_info(t_map *curr, t_map *parsed)
 	return (ret);
 }
 
-int	get_map_info(t_info *info)
+int		get_map_info(t_info *info)
 {
 	t_map	parsed;
 	char	**split;

@@ -6,13 +6,12 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:34:22 by wta               #+#    #+#             */
-/*   Updated: 2018/12/24 16:58:25 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 11:06:37 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/includes/libft.h"
 #include "filler.h"
-
 
 void	get_first_enemy(t_info *info)
 {

@@ -6,14 +6,14 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:33:58 by wta               #+#    #+#             */
-/*   Updated: 2018/12/24 15:31:22 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 10:54:07 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/includes/libft.h"
 #include "filler.h"
 
-int	is_valid_piece_line(char *line)
+int		is_valid_piece_line(char *line)
 {
 	char	c;
 	int		idx;
@@ -33,7 +33,7 @@ int	is_valid_piece_line(char *line)
 	return (0);
 }
 
-int	check_piece_line(t_info *info, char *line, int y)
+int		check_piece_line(t_info *info, char *line, int y)
 {
 	char	*seeker;
 	int		ret;
@@ -44,15 +44,15 @@ int	check_piece_line(t_info *info, char *line, int y)
 		ret = 0;
 	if (is_valid_piece_line(info->piece.piece[y]) == 0)
 		return (0);
-	if (y >= 1 && ft_strlen(info->piece.piece[y]) != ft_strlen(info->piece.piece[y - 1]))
+	if (y >= 1 && ft_strlen(info->piece.piece[y]) != ft_strlen(
+				info->piece.piece[y - 1]))
 		ret = 0;
 	return (ret);
 }
 
-int	get_piece(t_info *info, int width, int height)
+int		get_piece(t_info *info, int width, int height)
 {
 	char	*line;
-	char	*seeker;
 	int		ret;
 	int		y;
 
@@ -60,7 +60,8 @@ int	get_piece(t_info *info, int width, int height)
 	ret = (width != 0 && height != 0) ? 1 : 0;
 	if (width != 0 && height != 0)
 	{
-		if ((info->piece.piece = ft_memalloc(sizeof(char*) * (height + 1))) == NULL)
+		if ((info->piece.piece = ft_memalloc(sizeof(char*) * (
+							height + 1))) == NULL)
 			return (0);
 		y = -1;
 		while (ret == 1 && ++y < height)
@@ -98,10 +99,9 @@ void	get_shift(t_piece *piece)
 		}
 		y++;
 	}
-
 }
 
-int	parse_piece(t_info *info)
+int		parse_piece(t_info *info)
 {
 	char	**split;
 	t_piece	*piece_ptr;

@@ -6,7 +6,7 @@
 #    By: wta <wta@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/28 20:09:26 by wta               #+#    #+#              #
-#    Updated: 2018/12/18 17:38:34 by wta              ###   ########.fr        #
+#    Updated: 2019/01/06 11:03:36 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #=======================================================================  COLOR#
@@ -26,8 +26,19 @@ OBJ			=	$(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
 CC			=	gcc
 INC			=	-I $(INCDIR) -I .
 CFLAGS		=	-Wall -Wextra -Werror
-SRCS		=
-HEADER		=
+SRCS		=		\
+algo_selector.c		\
+filler_utils.c		\
+lst_pos.c			\
+main.c				\
+map.c				\
+parse_map.c			\
+parse_map_utils.c	\
+parse_piece.c		\
+read_stdin.c		\
+set_info.c
+HEADER		=		\
+filler.h
 #======================================================================# RULES #
 all : $(NAME)
 #=======================================================================# NAME #
