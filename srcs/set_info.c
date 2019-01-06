@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 10:52:17 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 22:55:29 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		get_map_info(t_info *info)
 		return (ret);
 	if ((split = ft_strsplit(line, ' ')) != NULL)
 	{
-		if ((ft_strcmp("Plateau", split[0])) == 0
+		if (split[0] != NULL && (ft_strcmp("Plateau", split[0])) == 0
 		&& split[1] != NULL && split[2] != NULL)
 		{
 			parsed.width = ft_atoi(split[2]);

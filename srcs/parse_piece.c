@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:33:58 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 22:39:24 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 22:56:25 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int		parse_piece(t_info *info)
 		return (ret);
 	if ((split = ft_strsplit(line, ' ')) != NULL)
 	{
-		if (ft_strcmp("Piece", split[0]) == 0)
+		if (split[0] != NULL && ft_strcmp("Piece", split[0]) == 0)
 		{
 			piece_ptr = &info->piece;
 			piece_ptr->height = ft_atoi(split[1]);
