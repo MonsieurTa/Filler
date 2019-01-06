@@ -6,12 +6,11 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 19:18:54 by wta               #+#    #+#             */
-/*   Updated: 2018/12/20 23:30:06 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/07 00:08:08 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static t_list	*get_file(t_list **head, int fd)
 {
