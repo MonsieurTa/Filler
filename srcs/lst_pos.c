@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.41.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 09:16:35 by wta               #+#    #+#             */
-/*   Updated: 2018/12/21 10:06:02 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 20:44:52 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 t_lst_pos	*lst_newnode(int x, int y)
 {
 	t_lst_pos	*node;
+
 	if ((node = ft_memalloc(sizeof(t_lst_pos))) == NULL)
 		return (NULL);
 	node->next = NULL;

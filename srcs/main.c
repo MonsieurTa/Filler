@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 18:19:46 by wta               #+#    #+#             */
-/*   Updated: 2018/12/27 20:15:46 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/06 20:43:03 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,7 @@ t_pos	closest_enemy_node(t_lst_pos *lst, int width, int height)
 	return (tmp.pos);
 }
 
-t_pos	lowest_node(t_lst_pos *lst)
-{
-	t_lst_pos	tmp;
-
-	tmp = *lst;
-	while (lst)
-	{
-		if (lst->pos.y < tmp.pos.y)
-			tmp = *lst;
-		lst = lst->next;
-	}
-	return (tmp.pos);
-}
-
-int	get_player_lowest(t_info *info)
-{
-	int	y;
-
-	y = 0;
-	while (y < info->map.height)
-	{
-		if (ft_strchr(info->map.map[y], info->player) != NULL)
-			return (y);
-		y++;
-	}
-	return (-1);
-}
-
-int	are_lower(t_info *info, t_lst_pos *lst)
+int		are_lower(t_info *info, t_lst_pos *lst)
 {
 	int	y;
 
@@ -94,7 +66,22 @@ t_pos	closest_lowest_node(t_lst_pos *lst)
 	return (tmp.pos);
 }
 
-int	main(void)
+void	choose_algo(t_info *info)
+{
+	if (info->map.height < 24 && info->map.width < 24
+	&& info->player == 'X')
+	{
+		if (are_lower(info, info->lst) == 1)
+			info->output = lowest_node(info->lst);
+		else
+			info->output = closest_lowest_node(info->lst);
+	}
+	else
+		info->output = closest_enemy_node(info->lst, info->map.width,
+			info->map.height);
+}
+
+int		main(void)
 {
 	t_info	info;
 
@@ -103,19 +90,9 @@ int	main(void)
 	{
 		parse_map(&info);
 		ft_mapndel(info.piece.piece, info.piece.height);
-		if (info.lst)
+		if (info.lst != NULL)
 		{
-			if (info.map.height < 24 && info.map.width < 24
-			&& info.player == 'X')
-			{
-				if (are_lower(&info, info.lst) == 1)
-					info.output = lowest_node(info.lst);
-				else
-					info.output = closest_lowest_node(info.lst);
-			}
-			else
-				info.output = closest_enemy_node(info.lst, info.map.width,
-						info.map.height);
+			choose_algo(&info);
 			rm_lst(info.lst);
 			info.lst = NULL;
 			ft_printf("%d %d\n", info.output.y, info.output.x);
