@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:33:58 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 22:56:25 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/07 19:06:08 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		get_piece(t_info *info, int width, int height)
 	int		y;
 
 	line = NULL;
-	ret = (width != 0 && height != 0) ? 1 : 0;
+	ret = (width > 0 && height > 0) ? 1 : 0;
 	if (width != 0 && height != 0)
 	{
 		if ((info->piece.piece = ft_memalloc(sizeof(char*) * (

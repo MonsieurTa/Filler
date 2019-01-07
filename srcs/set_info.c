@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 22:55:29 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/07 19:05:04 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int		check_map_info(t_map *curr, t_map *parsed)
 	if ((curr->width != 0 && curr->width == parsed->width)
 	&& (curr->height != 0 && curr->height == parsed->height))
 		return (ret);
-	if (curr->width == 0 && parsed->width != 0)
+	if (curr->width == 0 && parsed->width > 0)
 		curr->width = parsed->width;
 	else
 		ret = 0;
-	if (curr->height == 0 && parsed->height != 0)
+	if (curr->height == 0 && parsed->height > 0)
 		curr->height = parsed->height;
 	else
 		ret = 0;
