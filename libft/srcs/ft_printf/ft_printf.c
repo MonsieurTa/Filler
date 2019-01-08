@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 09:38:55 by wta               #+#    #+#             */
-/*   Updated: 2018/12/02 07:06:49 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 07:49:35 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		ft_parse_pf(t_lpf **lpf, char *fmt, va_list ap, int *index)
 	}
 	(*index)++;
 	node->ret += ft_strlen(node->str);
-	lpf = ft_lpf_append(lpf, node);
+	*lpf = ft_lpf_append(lpf, node);
 	return (1);
 }
 
@@ -98,10 +98,13 @@ int		ft_get_str_pf(t_lpf **lpf, const char *fmt, int index)
 		return (0);
 	while (fmt[nindex] && fmt[nindex] != '%')
 		nindex++;
-	if (!(node->str = ft_strndup(&fmt[index], nindex - index)))
+	if ((node->str = ft_strndup(&fmt[index], nindex - index)) != NULL)
+	{
+		node->ret = ft_strlen(node->str);
+		*lpf = ft_lpf_append(lpf, node);
+	}
+	else
 		free(node);
-	node->ret = ft_strlen(node->str);
-	lpf = ft_lpf_append(lpf, node);
 	return (nindex);
 }
 

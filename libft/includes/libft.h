@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/28 20:38:40 by wta               #+#    #+#             */
-/*   Updated: 2018/12/20 20:30:10 by wta              ###   ########.fr       */
+/*   Updated: 2018/12/02 16:24:25 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct	s_list
 
 typedef struct	s_gnl
 {
-	struct s_gnl	*next;
 	char			*str;
 	int				fd;
 }				t_gnl;

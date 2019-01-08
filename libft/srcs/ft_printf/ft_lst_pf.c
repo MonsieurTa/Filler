@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 01:12:30 by wta               #+#    #+#             */
-/*   Updated: 2018/11/25 11:24:04 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 07:48:26 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ t_lpf	*ft_pf_new(void)
 	return (new);
 }
 
-t_lpf	**ft_lpf_append(t_lpf **lpf, t_lpf *node)
+t_lpf	*ft_lpf_append(t_lpf **lpf, t_lpf *node)
 {
 	t_lpf	*elem;
 
 	elem = NULL;
-	if (*lpf)
+	if (*lpf != NULL)
 	{
 		elem = *lpf;
 		while (elem->next)
@@ -68,7 +68,7 @@ t_lpf	**ft_lpf_append(t_lpf **lpf, t_lpf *node)
 	}
 	else
 		*lpf = node;
-	return (lpf);
+	return (*lpf);
 }
 
 void	ft_rm_lst(t_lpf *lst)

@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/05 18:29:23 by wta               #+#    #+#             */
-/*   Updated: 2018/11/05 14:57:33 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 04:29:35 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 char	*ft_strmap(char const *s, char (*f)(char))
 {
-	size_t	len;
 	char	*new;
+	size_t	len;
+	size_t	i;
 
 	new = NULL;
-	if (s)
+	if (s && f)
 	{
 		len = ft_strlen(s);
-		if (!(new = (char*)malloc(sizeof(char) * (len + 1))))
-			return (NULL);
-		*(new + len) = 0;
-		while (*s)
-			*new++ = (*f)(*s++);
-		return (new - len);
+		if ((new = ft_strnew(len)) != NULL)
+		{
+			i = -1;
+			while (++i < len)
+				new[i] = (*f)(s[i]);
+		}
 	}
-	else
-		return (NULL);
+	return (new);
 }

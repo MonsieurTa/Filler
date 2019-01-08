@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 15:33:58 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 22:56:25 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 08:12:13 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		check_piece_line(t_info *info, char *line, int y)
 
 	ret = 1;
 	if (((seeker = ft_str_char_skip(line, ' ')) == NULL)
+	|| ((int)ft_strlen(seeker) != info->piece.width)
 	|| (info->piece.piece[y] = ft_strdup(seeker)) == NULL)
 		ret = 0;
 	if (is_valid_piece_line(info->piece.piece[y]) == 0)
@@ -120,7 +121,8 @@ int		parse_piece(t_info *info)
 			piece_ptr->height = ft_atoi(split[1]);
 			piece_ptr->width = ft_atoi(split[2]);
 			ret = get_piece(info, piece_ptr->width, piece_ptr->height);
-			get_shift(&info->piece);
+			if (ret == 1)
+				get_shift(&info->piece);
 		}
 		ft_splitdel(split);
 	}

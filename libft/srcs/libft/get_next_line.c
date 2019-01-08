@@ -6,12 +6,11 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 19:18:54 by wta               #+#    #+#             */
-/*   Updated: 2018/12/20 23:30:06 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 07:39:03 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static t_list	*get_file(t_list **head, int fd)
 {
@@ -40,24 +39,24 @@ static t_list	*get_file(t_list **head, int fd)
 	return (elem);
 }
 
-t_list			*rm_elem(t_list *list, t_list *file)
+t_list			*rm_elem(t_list *list, int fd)
 {
 	t_list		*tmp;
 
 	if (list == NULL)
 		return (NULL);
-	if (((t_gnl*)list->cnt)->fd == ((t_gnl*)file->cnt)->fd)
+	if (((t_gnl*)list->cnt)->fd == fd)
 	{
 		tmp = list->next;
 		free(((t_gnl*)list->cnt)->str);
 		free(list->cnt);
 		free(list);
-		tmp = rm_elem(tmp, file);
+		tmp = rm_elem(tmp, fd);
 		return (tmp);
 	}
 	else
 	{
-		list->next = rm_elem(list->next, file);
+		list->next = rm_elem(list->next, fd);
 		return (list);
 	}
 }
@@ -105,24 +104,26 @@ char			*buf_trim(char **needle, char **str)
 
 int				get_next_line(const int fd, char **line)
 {
-	static t_list	*lst_fd;
+	static t_list	*lst_fd = NULL;
 	t_list			*file;
 	char			*needle;
-	char			*str;
 	int				ret;
 
+	file = NULL;
 	needle = NULL;
-	str = NULL;
+	ret = 0;
 	if (fd < 0 || line == NULL || read(fd, 0, 0) < 0)
+	{
+		lst_fd = rm_elem(lst_fd, fd);
 		return (-1);
-	if (!(file = get_file(&lst_fd, fd)))
-		return (-1);
-	((t_gnl*)file->cnt)->str = get_str(fd, ((t_gnl*)file->cnt)->str, &ret);
-	if (!((t_gnl*)file->cnt)->str)
+	}
+	if ((file = get_file(&lst_fd, fd)) == NULL ||
+	(((t_gnl*)file->cnt)->str = get_str(fd, ((t_gnl*)file->cnt)->str,
+	   	&ret)) == NULL)
 		return (-1);
 	if (ret < BUFF_SIZE && (*(((t_gnl*)file->cnt)->str)) == '\0')
 	{
-		lst_fd = rm_elem(lst_fd, file);
+		lst_fd = rm_elem(lst_fd, fd);
 		return (0);
 	}
 	if (!(*line = buf_trim(&needle, &((t_gnl*)file->cnt)->str)))

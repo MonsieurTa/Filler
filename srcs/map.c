@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 15:34:22 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 22:50:37 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 08:00:08 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,12 @@ int		create_map(t_info *info)
 	{
 		if (get_next_line(0, &line) <= 0
 		|| (needle = ft_strchr(line, ' ')) == NULL
+		|| (int)ft_strlen(needle + 1) != info->map.width
 		|| (info->map.map[idx] = ft_strdup(needle + 1)) == NULL)
 			ret = 0;
 		ft_strdel(&line);
 	}
-	if (ret == 0)
-		return (ft_mapndel(info->map.map, idx));
-	get_first_enemy(info);
+	(ret == 0) ? ft_mapndel(info->map.map, idx) : get_first_enemy(info);
 	return (ret);
 }
 

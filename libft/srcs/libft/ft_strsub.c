@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 12:06:19 by wta               #+#    #+#             */
-/*   Updated: 2018/11/05 14:57:04 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 06:01:55 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,14 @@
 char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
 	char	*new;
+	size_t	i;
 
 	new = NULL;
-	if (s)
+	if (s != NULL && (new = ft_strnew(len)) != NULL)
 	{
-		if (!(new = (char*)malloc(sizeof(char) * (len + 1))))
-			return (NULL);
-		*(new + len) = 0;
-		s = s + start;
-		start = len;
-		while (start--)
-			*new++ = *s++;
-		return (new - len);
+		i = -1;
+		while (++i < len)
+			new[i] = s[start++];
 	}
-	return (NULL);
+	return (new);
 }

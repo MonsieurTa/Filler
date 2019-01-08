@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 15:41:16 by wta               #+#    #+#             */
-/*   Updated: 2018/11/05 14:54:02 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 04:40:04 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@ char	*ft_wdcpy(const char *s, char c)
 {
 	char	*dst;
 	size_t	wdlen;
+	size_t	i;
 
 	dst = NULL;
-	wdlen = 0;
-	if (s)
+	if (s != NULL)
 	{
 		wdlen = ft_word_len(s, c);
-		if (!(dst = (char*)malloc(sizeof(char) * (wdlen + 1))))
-			return (NULL);
-		while (*s != c && *s != 0)
-			*dst++ = *s++;
-		*dst = 0;
+		if ((dst = ft_strnew(wdlen)) != NULL)
+		{
+			i = -1;
+			while (++i < wdlen)
+				dst[i] = s[i];
+		}
 	}
-	return (dst - wdlen);
+	return (dst);
 }

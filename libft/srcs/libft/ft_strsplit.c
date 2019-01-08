@@ -6,28 +6,25 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/09 14:40:44 by wta               #+#    #+#             */
-/*   Updated: 2018/11/15 00:39:04 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 06:13:47 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	del_tab(char **tab, int len)
+static void	*del_tab(char **tab, int len)
 {
 	int	i;
 
-	i = 0;
 	if (tab)
 	{
-		while (i < len)
-		{
-			free(tab[i]);
-			tab[i] = NULL;
-			i++;
-		}
+		i = -1;
+		while (++i < len)
+			ft_strdel(&tab[i]);
 		free(tab);
 		tab = NULL;
 	}
+	return (NULL);
 }
 
 char		**ft_strsplit(char const *s, char c)
@@ -36,25 +33,24 @@ char		**ft_strsplit(char const *s, char c)
 	size_t	wdcount;
 	int		i;
 
+	split = NULL;
 	if (s && c)
 	{
 		wdcount = ft_word_count(s, c);
-		if (!(split = (char**)malloc(sizeof(char*) * (wdcount + 1))))
-			return (NULL);
-		i = 0;
-		while (*s)
+		if ((split = (char**)malloc(sizeof(char*) * (wdcount + 1))) != NULL)
 		{
-			if (*s != c)
+			split[wdcount] = NULL;
+			i = -1;
+			while (*s != '\0')
 			{
-				if ((split[i++] = ft_wdcpy(s, c)) == NULL)
+				if (*s != c)
 				{
-					del_tab(split, --i);
-					return (NULL);
+					if ((split[++i] = ft_wdcpy(s, c)) == NULL)
+						return (del_tab(split, i));
 				}
+				s = (*s != c) ? s + ft_word_len(s, c) : s + 1;
 			}
-			s = (*s != c) ? s + ft_word_len(s, c) : s + 1;
 		}
-		split[i] = 0;
 	}
-	return ((s && c) ? split : NULL);
+	return (split);
 }

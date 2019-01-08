@@ -6,11 +6,12 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 22:55:29 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 07:37:54 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/includes/libft.h"
+#include "../libft/includes/ft_printf.h"
 #include "filler.h"
 
 void	init_info(t_info *info)
@@ -38,8 +39,8 @@ int		get_player(t_info *info)
 		else if (ft_strstr(line, "p2"))
 			info->player = 'X';
 		info->enemy = (info->player == 'O') ? 'X' : 'O';
-		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	return (info->player == 'O' || info->player == 'X');
 }
 

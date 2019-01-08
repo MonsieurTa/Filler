@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 08:11:30 by wta               #+#    #+#             */
-/*   Updated: 2018/11/25 13:05:02 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 04:53:18 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,15 @@ char	*ft_itoa_hex(unsigned long long n, t_lpf *node)
 
 char	*ft_convert_acc_hex(char *str, int len, t_lpf *node)
 {
-	char	*new;
-
-	new = str;
 	if (str[1] == 'x' || str[1] == 'X')
 	{
-		if (!(new = ft_strinsert(
+		if (!(str = ft_strinsert(
 			str, ft_strzero(node->acc - len), 2)))
 			return (NULL);
 	}
-	else if (!(new = ft_strjoinfree(ft_strzero(node->acc - len), str)))
+	else if (!(str = ft_strjoinfree(ft_strzero(node->acc - len), str)))
 		return (NULL);
-	return (new);
+	return (str);
 }
 
 char	*ft_format_hex(char *str, int len, t_lpf *node)
