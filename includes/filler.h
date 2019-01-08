@@ -6,14 +6,12 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:16:09 by wta               #+#    #+#             */
-/*   Updated: 2019/01/06 20:59:44 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 08:26:55 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
-
-# include <stdio.h>
 
 typedef struct	s_pos
 {

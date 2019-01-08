@@ -6,12 +6,11 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:04:37 by wta               #+#    #+#             */
-/*   Updated: 2019/01/08 07:20:17 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 08:27:22 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {
