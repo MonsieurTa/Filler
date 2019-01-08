@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/19 10:17:57 by wta               #+#    #+#             */
-/*   Updated: 2019/01/07 19:05:04 by wta              ###   ########.fr       */
+/*   Updated: 2019/01/08 03:03:56 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int		get_player(t_info *info)
 		else if (ft_strstr(line, "p2"))
 			info->player = 'X';
 		info->enemy = (info->player == 'O') ? 'X' : 'O';
-		ft_strdel(&line);
 	}
+	ft_strdel(&line);
 	return (info->player == 'O' || info->player == 'X');
 }
 
